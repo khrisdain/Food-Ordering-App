@@ -1,6 +1,6 @@
 import React from 'react'
 import './AppDownload.css'
-import { assets } from '../../components/assets/assets.js'
+import { assets } from '../../assets/assets.js'
 
 
 const AppDownload = () => {
@@ -16,3 +16,4 @@ const AppDownload = () => {
 }
 
 export default AppDownload
+ 

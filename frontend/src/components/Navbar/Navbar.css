@@ -60,3 +60,21 @@
     right: -8px;
 }
 
+
+/*Media Query for max-width of 1050px*/
+@media (max-width: 1050px) {
+    .navbar .logo{
+        width: 140px;
+    }
+    .navbar-menu{
+        gap: 20px;
+        font-size: 17px;
+    }
+    .navbar-right{
+        gap: 30px;
+    }
+    .navbar-right{
+        
+    }
+}
+
