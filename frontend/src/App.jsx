@@ -7,19 +7,21 @@ import Footer from './components/Footer/Footer';
 import PlaceOrder from './pages/PlaceOrder/PlaceOrder';
 
 const App = () => {
-  return (
-    <> 
-    <div className="app">
-      <Navbar />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/cart' element={<Cart />} />  
-        <Route path='/order' element={<PlaceOrder />} />  
-      </Routes>
-    </div>
-    <Footer />
-    </>
-  )
+    const [showLogin, setShowLogin] = useState();
+    
+    return (
+      <> 
+      <div className="app">
+        <Navbar />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/cart' element={<Cart />} />  
+          <Route path='/order' element={<PlaceOrder />} />  
+        </Routes>
+      </div>
+      <Footer />
+      </>
+    )
 }
 
 export default App
