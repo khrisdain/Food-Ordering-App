@@ -5,7 +5,7 @@ import { StoreContext } from '../../context/StoreContext'
 const Cart = () => {
 
   //react use state to create 3 global arguments
-  const { cartItem, food_list, removeFromCart} = useContext(StoreContext)
+  const { id, cartItem, food_list, removeFromCart} = useContext(StoreContext)
   return (
     <div className='cart'>
       <div className="cart-items">
@@ -18,7 +18,26 @@ const Cart = () => {
           <p>Remove</p>
         </div>
         <br />
-        <br />
+        <hr />
+        {food_list.map((item, index) => {
+          if(cartItem[item._id] > 0)
+          {
+            return(
+              <div>
+                <div className='cart-items-title  cart-items-item'>
+                  <img src={item.image} alt="" />
+                  <p>{item.name}</p>
+                  <p>${item.price}</p>
+                  <p>{cartItem[item._id]}</p>
+                  <p>${item.price * cartItem[item._id]}</p>
+                  <p onClick={() => removeFromCart(item._id)} >x</p>
+                </div>
+                <hr/>
+              </div>
+            )
+
+          }
+        })}
       </div>
     </div>
   )
