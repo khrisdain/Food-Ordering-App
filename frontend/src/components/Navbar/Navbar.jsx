@@ -30,4 +30,3 @@ const Navbar = ({setShowLogin}) => { //global pull
 }
 
 export default Navbar
- 
