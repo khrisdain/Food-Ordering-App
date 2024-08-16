@@ -22,8 +22,9 @@
 .cart hr{
     height: 1px;
     color: grey;
+    border: none;
 }
 
-.cart-items-item p{
+.cart-items-item .cross{
     cursor: pointer;
 }
