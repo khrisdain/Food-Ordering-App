@@ -21,7 +21,7 @@
 
 .cart hr{
     height: 1px;
-    color: grey;
+    background-color: #e2e2e2;
     border: none;
 }
 

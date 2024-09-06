@@ -59,7 +59,7 @@ const Cart = () => {
               <b>Total</b>
               <b>{0}</b>
             </div>
-            <button>PROCEED TO CHECKOUT</button>
+          <button>PROCEED TO CHECKOUT</button>
           </div>
           <div className="cart-promocode">
             <div>
