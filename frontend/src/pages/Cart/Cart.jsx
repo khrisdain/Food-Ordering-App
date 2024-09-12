@@ -4,8 +4,8 @@ import { StoreContext } from '../../context/StoreContext'
 
 const Cart = () => {
 
-  //react use state to create 3 global arguments
-  const { id, cartItem, food_list, removeFromCart} = useContext(StoreContext)
+  //useContext: allows interpolation of function globally
+  const { id, cartItem, food_list, removeFromCart, getTotalCartAmount} = useContext(StoreContext)
   return (
     <div className='cart'>
       <div className="cart-items">
@@ -48,7 +48,7 @@ const Cart = () => {
           <div>
             <div className="cart-total-details">
               <p>Subtotal</p>
-              <p>{0}</p>
+              <p>{getTotalCartAmount()}</p>
             </div>
             <hr/>
 
@@ -60,7 +60,7 @@ const Cart = () => {
 
             <div className="cart-total-details">
               <b>Total</b>
-              <b>{0}</b>
+              <b>{getTotalCartAmount() + 2}</b>
             </div>
           </div>
           <button>PROCEED TO CHECKOUT</button>
