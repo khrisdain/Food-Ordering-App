@@ -32,6 +32,7 @@ const StoreContextProvider = (props) => {
           totalAmount += itemInfo.price * cartItem[item]
         }
       }
+      return totalAmount;
     }
 
     useEffect(() => { 
