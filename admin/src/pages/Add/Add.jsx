@@ -7,7 +7,7 @@ const Add = () => {
 
   return (
     <div className='add'>
-      <form action="flex-col">
+      <form className="flex-col">
         <div className='add-img-upload flex-col'>
           <p>Upload Image</p>
           <label htmlFor="image">
@@ -18,7 +18,7 @@ const Add = () => {
 
         <div className="add-product-name flex-col">
           <p>Product name</p>
-          <textarea name="description" rows="6" placeholder='Wite content here' required></textarea>
+          <input type="text" name="name" placeholder='Type here' />
         </div>
 
         <div className="add-product-description flex-col">
@@ -42,7 +42,7 @@ const Add = () => {
           </div>
 
           <div className="add-price flex-col">
-            <p>Produce price</p>
+            <p>Product price</p>
             <input type="Number" name='price' placeholder='$20'/>
           </div>            
         </div>
