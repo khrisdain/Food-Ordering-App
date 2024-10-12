@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./Add.css";
 import { assets } from '../../assets/assets';
 
 const Add = () => {
+  const [image, setImage] = useState()
+
   return (
     <div className='add'>
       <form action="flex-col">
@@ -14,7 +16,38 @@ const Add = () => {
           <input type="file" id="image" hidden required />
         </div>
 
-        <div className="add-product-name flex-col"></div>
+        <div className="add-product-name flex-col">
+          <p>Product name</p>
+          <textarea name="description" rows="6" placeholder='Wite content here' required></textarea>
+        </div>
+
+        <div className="add-product-description flex-col">
+          <p>Product description</p>
+          <textarea name="description" row="6" placeholder='write content here'></textarea>
+        </div>
+
+        <div className="add-category-price">
+          <div className='add-product-category flex-col'>
+            <p>Product Category</p>
+            <select name="category">
+              <option value="Salad"> Salad </option>
+              <option value="Rolls"> Rolls </option>
+              <option value="Deserts"> Deserts </option>
+              <option value="Sandwich"> Sandwich </option>
+              <option value="Cake"> Cake </option>
+              <option value="Pure Veg"> Pure Veg</option>
+              <option value="Pasta"> Pasta </option>
+              <option value="Noodles"> Noodles </option>
+            </select>
+          </div>
+
+          <div className="add-price flex-col">
+            <p>Produce price</p>
+            <input type="Number" name='price' placeholder='$20'/>
+          </div>            
+        </div>
+
+        <button type="submit" className="add-btn"> ADD </button>
       </form>
     </div>
   )
