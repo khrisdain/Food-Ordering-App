@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import "./Add.css";
+import axios from "axios";
 import { assets } from '../../assets/assets';
+import { toast } from 'react-toastify';
 
 const Add = () => {
+  const url = "http://localhost:4000"; //Backend Url
   const [image, setImage] = useState(false)
-  const [data, setData] = useState({
+  const [data, setData] = useState({ //default data state
     name: "",
     description: "",
     price: "",
@@ -26,9 +29,26 @@ const Add = () => {
     formData.append("description", data.description);
     formData.append("price", Number(data.price));
     formData.append("category", data.category);
-    formData.append("image", image)
+    formData.append("image", image);
+    const response = await axios.post(`${url}/api/food/add`, formData);
+    console.log(response)
+
+    //checking for response from the API
+    if(response.data.success) {
+      setData({
+        name: "",
+        description: "",
+        price: "",
+        category: "Salad"
+      })
+      setImage(false);
+      toast.success(response.data.message)
+    }else {
+      toast.error(response.data.message)
+    }
   }
 
+  
 
   return (
     <div className='add'>
