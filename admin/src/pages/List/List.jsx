@@ -5,20 +5,20 @@ import { toast } from "react-toastify";
 
 const List = () => {
   const url = "http://localhost:4000";
-  const [list, setList] = useState([])
+  const [list, setList] = useState([]);
 
-  const fetchList = async () => {
-    const response = await axios.get(`${url}/api/food/list`);
-    console.log(response);
-    if (response.data.success){
+  const fetchList = async() => {
+    const response = await axios.get(`${url}/api/food/list`)
+    if(response.data.success){
       setList(response.data.data)
-    }else {
+    }
+    else{
       toast.error("Error")
     }
   }
 
   useEffect(() => {
-    fetchList();
+    fetchList()
   }, [])
 
   return (
@@ -33,12 +33,13 @@ const List = () => {
           <b>Action</b>
         </div>
         {list.map((item, index) => {
-          return (
+          return(
             <div key={index} className="list-table-format">
-              <img src={`${url}/images/` + item.image} alt="" />
-              <p>{item.name}</p>
-              <p>{item.category}</p>
-              <p>{item.price}</p>
+              <img src={`${url}/images` + item.image} alt=""/>
+              <p>{ item.name }</p>
+              <p>{ item.category }</p>
+              <p>${ item.price }</p>
+              <p>X</p>
             </div>
           )
         })}
@@ -46,5 +47,6 @@ const List = () => {
     </div>
   )
 }
+
 
 export default List
