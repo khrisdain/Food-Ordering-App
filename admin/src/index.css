@@ -31,3 +31,9 @@ hr{
   display: flex;
   flex-direction: column;
 }
+
+.cursor{
+  cursor: pointer;
+}
+
+

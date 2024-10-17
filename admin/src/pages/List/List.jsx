@@ -17,8 +17,14 @@ const List = () => {
     }
   }
 
+  const removeFood = async(foodId) => {
+    const response = await axios.post(`${url}/api/food/remove`, {id: foodId})
+    //refresh the ui with the fetchList()
+    await fetchList();
+  }
+
   useEffect(() => {
-    fetchList()
+    fetchList([])
   }, [])
 
   return (
@@ -33,13 +39,19 @@ const List = () => {
           <b>Action</b>
         </div>
         {list.map((item, index) => {
+
           return(
             <div key={index} className="list-table-format">
-              <img src={`${url}/images` + item.image} alt=""/>
+              <img 
+                src={`${url}/images/${item.image}`}  
+                alt=""
+                onError = {(e) =>{
+                  e.target.oneerror = null;
+                }} />
               <p>{ item.name }</p>
               <p>{ item.category }</p>
               <p>${ item.price }</p>
-              <p>X</p>
+              <p onClick={() => removeFood(item._id)} className="cursor">X</p>
             </div>
           )
         })}
