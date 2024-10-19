@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import { connectDB } from "./config/db.js";
 import foodRouter from "./routes/foodRoute.js";
+import userRouter from "./routes/userRouter.js";
 
 //app config 
 const app = express()
@@ -16,6 +17,8 @@ connectDB();
 
 //api end points 
 app.use("/api/food", foodRouter)
+app.use("/images", express.static('uploads')) //serve static images(unchanged)
+app.use("/api/user", userRouter)
 
 //http request
 app.get("/", (req, res) => {
