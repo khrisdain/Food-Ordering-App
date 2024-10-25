@@ -106,4 +106,8 @@
     .cart-promocode{
         justify-content: start;
     }
+
+    .cart-items-title{
+        gap:10px;
+    }
 }

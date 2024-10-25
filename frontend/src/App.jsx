@@ -8,7 +8,7 @@ import PlaceOrder from './pages/PlaceOrder/PlaceOrder'
 import LoginPopup from './components/LoginPopup/LoginPopup';
 
 const App = () => {
-    const [showLogin, setShowLogin] = useState(true);
+    const [showLogin, setShowLogin] = useState(!localStorage.getItem('token'));
     
     return (
       <> 
