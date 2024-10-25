@@ -5,36 +5,6 @@ import validator from "validator"
 import 'dotenv/config'
 
 
-//login User
-const loginUser = async(req, res) => {
-    const {email, password} = req.body;
-    try {
-        const user = await userModel.findOne({email});
-
-        if(!user){
-            return res.json({success: false, message:"User doesn't exist"})
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-        if(!isMatch){
-            return res.json({success:false, message:"invalid credential"})
-        }
-        const token = createToken(user._Id)
-        res.json({success:true, token})
-
-    }catch(error){
-        console.log(error)
-        res.json({success:false, message:"Error"})
-    }
-}
-
-
-//jwt Token
-const createToken = (id) => {
-    return jwt.sign({id}, process.env.JWT_SECRET) //args: Payload and Signature
-}
-
-//register user
 const registerUser = async(req, res) => {
     const {name, password, email} = req.body
     try{
@@ -75,5 +45,34 @@ const registerUser = async(req, res) => {
         res.json({success: false, message: "Error"})
     }
 }
+//login User
+const loginUser = async(req, res) => {
+    const {email, password} = req.body;
+    try {
+        const user = await userModel.findOne({email});
+
+        if(!user){
+            return res.json({success: false, message:"User doesn't exist"})
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if(!isMatch){
+            return res.json({success:false, message:"invalid credential"})
+        }
+        const token = createToken(user._id)
+        return res.json({success:true, token})
+
+    }catch(error){
+        console.log(error)
+        return res.json({success:false, message:"Error"})
+    }
+}
+
+
+//jwt Token
+const createToken = (id) => {
+    return jwt.sign({id}, process.env.JWT_SECRET) //args: Payload and Signature
+}
+
 
 export {loginUser, registerUser}
