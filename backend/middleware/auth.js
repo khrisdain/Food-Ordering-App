@@ -1,19 +1,24 @@
-//user token decoded here
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 
-const authMiddleware = async (req,res,next) => {
-    const {token} = req.headers;
-    if(!token) {
-        return res.json({success: false, message:"Not Authorised, Login again"})
-    }
-    try{
-        const token_decode = jwt.verify(token, process.env.JWT_SECRET) //jwt api
-        req.body.userId = token_decode.id
+const authMiddleware = async (req, res, next) => {
+    const authHeader = req.headers.authorization; 
+    if (!authHeader) { return res.status(401).json({ success: false, message: "Not Authorized, Login again" })}
+
+
+    try {
+        // Extract the token from the "Bearer <token>" string
+        const token = authHeader.split(" ")[1];
+
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+
+        // Automatically attach the user ID to the request body
+        req.body.userId = decodedToken.id;
+        
         next();
-    }catch(error){
-        console.log(error);
-        res.json({success:false, message:"Error"})
+    } catch (error) {
+        console.error("Error in authentication:", error);
+        res.status(401).json({ success: false, message: "Invalid or expired token" });
     }
-}
+};
 
 export default authMiddleware;
