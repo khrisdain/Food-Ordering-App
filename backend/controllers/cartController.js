@@ -50,8 +50,25 @@ const removeFromCart = async(req, res) => {
     }
 }
 
-const getCart = async(req, res) => {
+const getUserCart = async(req, res) => {
+    try{
+        const { userId } = req.body;
 
+        const user = await userModel.findOne({_id: userId}, {cartData: 1})
+        
+        if(!user) return res.status(404).json({ success: false, message:"User not found"})
+        
+        const cartData = user.cartData || {};
+        
+        //check if the user has an item in their cart
+        if(Object.keys(cartData).length === 0) return res.json({success: true, message: "User's cart is empty"})
+        res.json({success: true, cartData})
+    
+
+    }catch (error){
+        console.log(error)
+        res.status(500).json({success: false, message:"Internal server error"})
+    }
 }
 
-export {addToCart, removeFromCart, getCart}
+export {addToCart, removeFromCart, getUserCart}
