@@ -54,6 +54,7 @@
     color: white;
     background-color: tomato;
     font-size: 15px;
+    cursor: pointer;
 }
 
 .login-popup-condition {

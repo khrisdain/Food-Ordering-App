@@ -12,20 +12,44 @@ const StoreContextProvider = (props) => {
   /*Fetch data from database */
   const [food_list, setFoodList] = useState([]);
 
-    const addToCart = (itemId) => {
-        //on first addition to cart 
+  const addToCart = async (itemId) => {
+    try{
       if(!cartItem[itemId]) {
-        setCartItem((prev) => ({...prev, [itemId]:1}))
+        setCartItem((prev) => ({...prev, [itemId]: 1}))
+      } else {
+        setCartItem((prev) => ({...prev, [itemId]: prev[itemId] + 1}))
       }
-      else{
-        setCartItem((prev) => ({...prev, [itemId] : prev[itemId] + 1}))
-      }
-    }
-    
 
-    const removeFromCart = (itemId) => {
-        setCartItem((prev) =>({...prev, [itemId] : prev[itemId] - 1}))
+      //Make Api call
+      const response = await axios.post(
+        url+ "/api/cart/add",
+        {itemId},
+        {headers: {Authorization: `Bearer ${token}`}}
+      );
+
+      if(!response.data.success) throw new Error(response.data.message)
+      console.log("Item added successfully")
+    } catch(error) {
+      console.error(error)
+      alert(error.response?.data?.message)
     }
+  };
+
+
+    const removeFromCart = async (itemId) => {
+        setCartItem((prev) =>({...prev, [itemId] : prev[itemId] - 1}))
+
+        //Make APi Call
+        const response = await axios.post(
+          url + "/api/cart/remove",
+          {itemId},
+          {headers: {Authorization: `Bearer ${token}`}}
+        );
+
+        if(!response.data.success) throw new Error(response.data.message)
+        console.log("item removed")
+    }
+
 
     const getTotalCartAmount = () => {
       let totalAmount = 0;
@@ -43,19 +67,65 @@ const StoreContextProvider = (props) => {
     const fetchFoodList = async() => {
       const response = await axios.get(url + "/api/food/list")
       setFoodList(response.data.data)
-    }
+    };
 
+
+    const loadCartData = async () => {
+      try {
+        if (!token) {
+          console.error("No token found, unable to load cart data.");
+          return;
+        }
+    
+        const response = await axios.post(
+          `${url}/api/cart/get`,
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+    
+        if (response.status === 200) {
+          setCartItem(response.data.CartData);
+        } else {
+          throw new Error("Failed to load cart data.");
+        }
+      } catch (error) {
+        console.error("Error loading cart data:", error);
+        alert(error.response?.data?.message || "Unauthorized access");
+      }
+    };
+    
     useEffect(() => {
       async function loadData() {
         await fetchFoodList();
-        //get the current token from localstorage
-        const currentToken = localStorage.getItem('token');
-        if (currentToken) {
-          setToken(currentToken)
+        if (localStorage.getItem("token")) {
+          setToken(localStorage.getItem("token"));
+          await loadCartData(localStorage.getItem("token"))
         }
       }
       loadData();
-    },[]) //empty dependency array: once on mount
+    }, [])
+
+    /*useEffect(() => {
+      async function loadData(){
+        try {
+          //Fetch the list of food items
+          const foods = await fetchFoodList();
+          setFoodList(foods)
+
+          //Get current token from localStorage
+          const currentToken = localStorage.getItem("token");
+          if (currentToken) setToken(currentToken);
+
+          //Load CartData if token exists
+          const cartData = await loadCartData(currentToken);
+          setCartItem(cartData);
+        }
+        catch(error){
+          console.log('Error loading data:', error)
+        }
+      }
+      loadData();
+    }, [])*/
 
     const contextValue = {
     food_list,
