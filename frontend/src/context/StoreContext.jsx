@@ -13,26 +13,14 @@ const StoreContextProvider = (props) => {
   const [food_list, setFoodList] = useState([]);
 
   const addToCart = async (itemId) => {
-    try{
-      if(!cartItem[itemId]) {
-        setCartItem((prev) => ({...prev, [itemId]: 1}))
-      } else {
-        setCartItem((prev) => ({...prev, [itemId]: prev[itemId] + 1}))
-      }
-
-      //Make Api call
-      const response = await axios.post(
-        url+ "/api/cart/add",
-        {itemId},
-        {headers: {Authorization: `Bearer ${token}`}}
-      );
-
-      if(!response.data.success) throw new Error(response.data.message)
-      console.log("Item added successfully")
-    } catch(error) {
-      console.error(error)
-      alert(error.response?.data?.message)
+    if(!cartItem[itemId]) {
+      setCartItem((prev)=> ({ ...prev, [itemId]: 1}))
     }
+    else {
+      setCartItem((prev) => ({ ...prev, [itemId]: prev[itemId] + 1}))
+    }
+    //Making Api call
+    if()
   };
 
 
