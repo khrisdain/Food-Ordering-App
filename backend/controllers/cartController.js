@@ -39,7 +39,7 @@ const removeFromCart = async (req, res) => {
     }
 }
 
-//Get total item in cart 
+//Get all item in cart 
 const getCart = async (req, res) => {
     try{
         let userData = await userModel.findById(req.body.userId)
