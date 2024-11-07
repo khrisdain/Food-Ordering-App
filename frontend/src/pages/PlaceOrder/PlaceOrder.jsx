@@ -1,4 +1,4 @@
-import React, {useContext}from 'react'
+import React, {useContext, useState}from 'react'
 import "./PlaceOrder.css"
 import { StoreContext } from '../../context/StoreContext'
 
@@ -24,17 +24,28 @@ const PlaceOrder = () => {
     setData(data => ({...data, [name]: value}))
   }
 
-  useEffect(() => {
+  const placeOrder = async(event) => {
+    event.preventDefault(); //prevent the submit button from preloading page
+    let orderItems = [];
+    food_list.map((item) => { //calls each item 
+      if (cartItem[item._id > 0]) { //check the cartItem for the product id
+        let itemInfo = item;
+        itemInfo["quantity"] = cartItem[item._id]//Added the property of quantity 
+        orderItems.push(itemInfo)
+      }
+    })
+    console.log(orderItems);
+    
+  }
 
-  }, [data]) //on mount render componenet
 
   return (
-    <form className="place-order">
+    <form onSubmit={placeOrder} className="place-order">
       <div className="place-order-left">
         <p className="title">Delivery Information</p>
         <div className="multi-fields">
           <input onChange={onChangeHandler} value={data.firstName} name='firstName' type="text" placeholder='First Name' />
-          <input onChnage={onChangeHandler} value={data.lastName} name='lateName' type="text" placeholder='Last Name'/>
+          <input onChange={onChangeHandler} value={data.lastName} name='lastName' type="text" placeholder='Last Name'/>
         </div>
 
         <input onChange={onChangeHandler} value={data.email} name='email' type="email" placeholder="Email Address" />
@@ -73,7 +84,7 @@ const PlaceOrder = () => {
               <b>{getTotalCartAmount() + 2}</b>
             </div>
           </div>
-          <button>PROCEED TO PAYMENT</button>
+          <button type="submit">PROCEED TO PAYMENT</button>
         </div>
 
       </div>
