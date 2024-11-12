@@ -1,5 +1,6 @@
 import React, {useContext, useState}from 'react'
 import "./PlaceOrder.css"
+import axios from "axios"
 import { StoreContext } from '../../context/StoreContext'
 
 const PlaceOrder = () => {
@@ -24,19 +25,35 @@ const PlaceOrder = () => {
     setData(data => ({...data, [name]: value}))
   }
 
-  const placeOrder = async(event) => {
-    event.preventDefault(); //prevent the submit button from preloading page
+  const placeOrder = async (event) => {
+    event.preventDefault(); // Prevent page reload on submit
     let orderItems = [];
-    food_list.map((item) => { //calls each item 
-      if (cartItem[item._id > 0]) { //check the cartItem for the product id
-        let itemInfo = item;
-        itemInfo["quantity"] = cartItem[item._id]//Added the property of quantity 
-        orderItems.push(itemInfo)
-      }
+    food_list.map((item) => { //iterate through the object and add the iterations one by one in item 
+        if (cartItem[item._id] > 0) { // Check cart for product ID quantity
+            let itemInfo = { ...item}; // Copy item object to avoid modifying the original
+            itemInfo["quantity"] = cartItem[item._id]; // Add quantity to item
+            orderItems.push(itemInfo);
+        }
     })
-    console.log(orderItems);
-    
-  }
+    let orderData = {
+      address: data,
+      items: orderItems,
+      amount: getTotalCartAmount() + 2
+    }
+    let response = await axios.post(
+      url+"/api/order/place",
+      orderData,
+      {headers: {token}}
+    )
+    if (response.data.success) {
+      const { session_url } = response.data;
+      window.location.replace(session_url)
+    }
+    else {
+      alert("Error")
+    }
+};
+
 
 
   return (
@@ -81,7 +98,7 @@ const PlaceOrder = () => {
 
             <div className="cart-total-details">
               <b>Total</b>
-              <b>{getTotalCartAmount() + 2}</b>
+              <b>${getTotalCartAmount() === 0?0: getTotalCartAmount() + 2}</b>
             </div>
           </div>
           <button type="submit">PROCEED TO PAYMENT</button>
