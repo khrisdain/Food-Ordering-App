@@ -1,4 +1,5 @@
-import React, {useContext, useState}from 'react'
+import React, {useContext, useEffect, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
 import "./PlaceOrder.css"
 import axios from "axios"
 import { StoreContext } from '../../context/StoreContext'
@@ -54,7 +55,17 @@ const PlaceOrder = () => {
     }
 };
 
+const navigate = useNavigate();
 
+/*Navigate back home when user logs out */
+useEffect(() => {
+  if (!token) {
+    navigate('/cart')
+  }
+  else if(getTotalCartAmount() === 0) {
+    navigate('/cart')
+  }
+}, [])
 
   return (
     <form onSubmit={placeOrder} className="place-order">

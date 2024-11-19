@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import axios from 'axios';
+
 /*CreateContext facilitates the passing of data through the component tree without 
 having to pass props down manually */
 export const StoreContext = createContext(null)
