@@ -42,8 +42,20 @@ const Order = ({url}) => {
                   }
                 })}
               </p>
-              <p className='order-item-name'> {} </p>
+              <p className='order-item-name'> {order.address.firstName + " " + order.address.lastName} </p>
             </div>
+
+            <div className="order-item-address">
+              <p>{order.address.street+","}</p>
+              <p>{order.address.city+", "+order.address.state+", "+order.address.country+", "+order.address.zipcode}</p>
+            </div>
+
+            <div>
+              <p className='order-item-phone'>{order.address.phone}</p>
+            </div>
+
+            <p>Items: {order.items.length}</p>
+            <p>${order.amount}</p>
           </div>
         ))}
       </div>
