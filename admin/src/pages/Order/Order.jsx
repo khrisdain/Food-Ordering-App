@@ -56,6 +56,11 @@ const Order = ({url}) => {
 
             <p>Items: {order.items.length}</p>
             <p>${order.amount}</p>
+            <select>
+              <option value="Food Processing"> Food Processing </option>
+              <option value="Out for dekivery">Out for delivery</option>
+              <option value="Delivered"> Delivered </option>
+            </select>
           </div>
         ))}
       </div>
