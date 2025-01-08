@@ -103,5 +103,15 @@ const listOrders = async (req, res) => {
     }
 }
 
+//APi for updating the food order status
+const updateFoodStatus = async (req, res) => {
+    try{
 
-export { placeOrder, verifyOrder, userOrders, listOrders }
+    }
+    catch(erro){
+
+    }
+}
+
+
+export { placeOrder, verifyOrder, userOrders, listOrders, updateFoodStatus }
