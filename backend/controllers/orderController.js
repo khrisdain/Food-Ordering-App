@@ -104,14 +104,16 @@ const listOrders = async (req, res) => {
 }
 
 //APi for updating the food order status
-const updateFoodStatus = async (req, res) => {
+const updateStatus = async (req, res) => {
     try{
-
+        await orderModel.findByIdAndUpdate(req.body.orderId, {status: req.body.status})
+        res.json({ success: true, message: "Status Updated"})
     }
-    catch(erro){
-
+    catch(error){
+        console.log(error)
+        res.json({success: false, message:"Error"})
     }
 }
 
 
-export { placeOrder, verifyOrder, userOrders, listOrders, updateFoodStatus }
+export { placeOrder, verifyOrder, userOrders, listOrders, updateStatus } 
