@@ -23,12 +23,17 @@ const Order = ({url}) => {
     const statusHandler = async (event, orderId) => { //link with the select tag
       const response = await axios.post(url+"api/order/status", {
         orderId,
+        status: event.target.value
       })
+      if(response.data.success){
+        await fetchAllOrders();
+      }
     }
 
     useEffect(() => {
         fetchAllOrders();
     }, [])
+
 
   return (
     <div className='order add'>
@@ -60,7 +65,7 @@ const Order = ({url}) => {
             <p>${order.amount}</p>
             <select onChange={(event) => statusHandler(event, order._id)} value={order.status}>
               <option value="Food Processing"> Food Processing </option>
-              <option value="Out for dekivery">Out for delivery</option>
+              <option value="Out for delivery">Out for delivery</option>
               <option value="Delivered"> Delivered </option>
             </select>
           </div>
