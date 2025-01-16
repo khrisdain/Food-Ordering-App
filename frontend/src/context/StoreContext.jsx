@@ -77,7 +77,7 @@ const StoreContextProvider = (props) => {
 
         if(localStorage.getItem("token")) {
           setToken(localStorage.getItem("token"))
-         // await loadCartData(localStorage.getItem("token"))
+          await loadCartData(localStorage.getItem("token"))
         }
       }
       loadData();
@@ -97,6 +97,7 @@ const StoreContextProvider = (props) => {
     token,
     setToken
     }
+    
     return (
         <StoreContext.Provider value={contextValue}>
             {props.children}
