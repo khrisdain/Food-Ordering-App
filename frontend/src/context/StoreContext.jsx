@@ -6,7 +6,7 @@ having to pass props down manually */
 export const StoreContext = createContext(null)
 
 const StoreContextProvider = (props) => {
-  const url = "http://localhost:4000"
+  const url = "https://food-ordering-app-p5j5.onrender.com"
   const[cartItem, setCartItem] = useState({})
   const [token, setToken] = useState("")
 
