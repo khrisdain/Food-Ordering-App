@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from 'react'
 import './Order.css'
 import { toast } from 'react-toastify'
@@ -32,7 +34,7 @@ const Order = ({url}) => {
 
     useEffect(() => {
         fetchAllOrders();
-    }, [])
+    }, []) //declared empty dependency array
 
 
   return (
